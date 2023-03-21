@@ -1,0 +1,194 @@
+  
+% Qcircuit demonstration graphic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{amsart}
+
+
+\usepackage{graphicx}
+\usepackage{physics}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{listings}
+\usepackage[braket]{qcircuit}
+
+% & \multigate{5}{\mathcal{F}} & \qw \\
+% & \ghost{\mathcal{F}} & \qw \\
+% & \ghost{\mathcal{F}} & \qw \\
+% & \ghost{\mathcal{F}} & \qw \\
+% & \ghost{\mathcal{F}} & \qw \\
+% & \ghost{\mathcal{F}} & \qw
+
+%%% ----------------------------------------------------------------------
+\begin{document}
+
+
+\clearpage
+\begin{figure}
+   \centering
+    \Qcircuit @C=2.5em @R=.5em {
+        \lstick{}&\lstick{i_{0}}                & \multigate{2}{GA} & \multigate{8}{U_{fit}}& \qw                   & \qw                    & \qw          & \meter        & \qw   &\\
+                 &\cdots                        & \nghost{GA}       & \nghost{U_{fit}}      &                       &                        & \cdots       &                & \cdots&\\
+        \lstick{}&\lstick{i_{N}}                & \ghost{GA}        & \ghost{U_{fit}}       & \qw                   & \qw                    & \meter       & \qw           & \qw   &\\
+        \inputgroupv{1}{3}{1.5em}{.8em}{} \\                        
+        \lstick{}&\lstick{f_{0}}                & \qw                & \ghost{U_{fit}}       & \multigate{11}{Oracle}& \multigate{5}{Diffuser} & \qw          & \qw           & \qw   &\\ 
+                 &\cdots                        &                    & \nghost{U_{fit}}      & \nghost{Oracle}       & \nghost{Diffuser}      &              &               & \cdots&\\
+        \lstick{}&\lstick{f_{M}}                & \qw                & \ghost{U_{fit}}       & \ghost{Oracle}        & \ghost{Diffuser}       & \qw          & \qw           & \qw   &\\
+        \inputgroupv{5}{7}{1.5em}{.8em}{} \\                        
+        \lstick{}&\lstick{v}                    & \qw                & \ghost{U_{fit}}       & \ghost{Oracle}        & \ghost{Diffuser}       & \qw          & \qw           & \qw   &\\
+        \lstick{}&\lstick{ws}                   & \qw                & \qw                   & \ghost{Oracle}        & \ghost{Diffuser}       & \qw          & \qw           & \qw   &\\
+        \lstick{}&\lstick{val_{0}}              & \qw                & \qw                   & \ghost{Oracle}        & \qw                    & \qw          & \qw           & \qw   &\\
+                 &\cdots                        &                    &                       & \nghost{Oracle}       &                        &              &               & \cdots&\\
+        \lstick{}&\lstick{val_{M}}              & \qw                & \qw                   & \ghost{Oracle}        & \qw                    & \qw          & \qw           & \qw   &\\
+        \inputgroupv{11}{13}{1.5em}{.8em}{} \\                      
+        \lstick{}&\lstick{c_{0}}                & \qw                & \qw                   & \ghost{Oracle}        & \qw                    & \qw          & \qw           & \qw   &\\
+        \lstick{}&\lstick{c_{1}}                & \qw                & \qw                   & \ghost{Oracle}        & \qw                    & \qw          & \qw           & \qw   &\\
+                 &\cw                           & \cw                & \cw                   & \cw                   & \cw                    & \cw \cwx[-14]    & \cw \cwx[-16]     & \cw   &\\
+                 &\cw                           & \cw \cwx[-15]                              & \cw                   & \cw                    & \cw          & \cw           & \cw   & \cw   &\\
+    }
+
+ 
+  \label{fig:circuit}
+\end{figure}
+
+
+\clearpage
+
+\Qcircuit @C=1.em @R=.5em {
+\lstick{}&\lstick{f_{0}}         & \multigate{8}{Subtractor} & \qw          & \qw      & \ctrl{2} & \qw      & \qw    & \multigate{8}{Adder} &\gate{H} &\gate{X} &\ctrl{2} &\gate{X} &\gate{H} & \qw & \rstick{f_{0}}\\
+&\cdots           &           \nghost{Subtractor}       & \cdots &                    &          &          & \cdots & \nghost{Adder}        &         &         &         &         &         & \cdots \\ 
+\lstick{}&\lstick{f_{M}}         & \ghost{Subtractor}        & \qw          & \qw      & \ctrl{8} & \qw      & \qw    & \ghost{Adder}        &\gate{H} &\gate{X} &\ctrl{8} &\gate{X} &\gate{H} & \qw & \rstick{f_{M}}\\
+\inputgroupv{1}{3}{4em}{.8em}{} \\ 
+\lstick{}&\lstick{c_{0}}    & \ghost{Subtractor}        & \qw     & \qw      & \qw      & \qw      & \qw    & \ghost{Adder}                  &\qw      &\qw      &\qw      &\qw      &\qw      & \qw & \rstick{c_{0}}\\
+\lstick{}&\lstick{c_{1}}         & \ghost{Subtractor}        & \qw          & \qw      & \qw      & \qw      & \qw    & \ghost{Adder}        &\qw      &\qw      &\qw      &\qw      &\qw      & \qw & \rstick{c_{1}}\\
+\lstick{}&\lstick{val_{0}}  & \ghost{Subtractor}        & \qw     & \qw      & \qw      & \qw      & \qw    & \ghost{Adder}                  &\qw      &\qw      &\qw      &\qw      &\qw      & \qw & \rstick{val_{0}}\\ 
+&\cdots           &                              & \cdots &                   &          &          & \cdots & \nghost{Adder}                &         &         &         &         &         & \cdots \\
+\lstick{}&\lstick{val_{M}}  & \ghost{Subtractor}        & \qw     & \qw      & \qw      & \qw      & \qw    & \ghost{Adder}                  &\qw      &\qw      &\qw      &\qw      &\qw      & \qw & \rstick{val_{M}}\\ 
+\inputgroupv{7}{9}{4em}{.8em}{} \\ 
+\lstick{}&\lstick{v}             & \qw                  & \qw          & \qw      & \ctrl{1} & \qw      & \qw    & \qw                       &\gate{H} &\gate{X} &\ctrl{1} &\gate{X} &\gate{H} & \qw & \rstick{v}\\
+\lstick{}&\lstick{ws}            & \qw                  & \qw          & \gate{H} & \targ    & \gate{H} & \qw    & \qw                       &\qw      &\gate{H} &\targ    &\gate{H} &\gate{H} & \qw & \rstick{ws}\\
+}
+
+
+
+
+
+
+\clearpage
+\begin{figure}
+   \centering
+
+    \subfigure\textit{a)}\quad\quad{
+        \Qcircuit @C=1.5em @R=.8em @!R  {
+        \lstick{}   &\lstick{i_{0}}     & \multigate{7}{GA}    & \qw    & \rstick{i_{0}} & \\
+        & \cdots                        & \nghost{GA}          & \cdots  \\
+        \lstick{}   &\lstick{i_{k-j}}   & \ghost{GA}           & \qw    & \rstick{i_{k-j}} &\\
+        & \cdots                        & \nghost{GA}          & \cdots  \\
+        \lstick{}   &\lstick{i_{k-1}}   & \ghost{GA}           & \qw    & \rstick{i_{k-1}} &\\
+        \lstick{}   &\lstick{i_{k}}     & \ghost{GA}           & \qw    & \rstick{i_{k}} &\\ 
+        &\cdots                         & \nghost{GA}          & \cdots  \\
+        \lstick{}   &\lstick{i_{N-1}}   & \ghost{GA}           & \qw    & \rstick{i_{N-1}} & \\
+        &           & \cw \cwx[-1]                              & \cw \\
+        \inputgroupv{1}{8}{2.5em}{.9em}{}
+        }
+    }\quad
+    \subfigure\textit{b)}\quad\quad{
+        \Qcircuit @C=1.5em @R=.8em @!R  {
+           &                   & \measure{\mbox{GA}}\cwx[3] & \cw \\
+        \lstick{}   &\lstick{i_{0}}     & \qw                         & \qw    & \rstick{i_{0}} & \\
+        & \cdots                        &                             & \cdots  \\
+        \lstick{}   &\lstick{i_{k-j}}   & \meter\cwx[2]               & \cw    & \rstick{i_{k-j}} &\\
+        & \cdots                        &                             & \cdots  \\
+        \lstick{}   &\lstick{i_{k-1}}   & \meter\cwx[1]               & \cw    & \rstick{i_{k-1}} &\\
+        \lstick{}   &\lstick{i_{k}}     & \meter                      & \cw    & \rstick{i_{k}} &\\ 
+        &\cdots                         &                             & \cdots  \\
+        \lstick{}   &\lstick{i_{N-1}}   & \qw                         & \qw    & \rstick{i_{N-1}} & \\
+        }
+    }
+
+  
+  \label{fig:mho circuit}
+\end{figure}
+
+
+
+
+
+
+\clearpage
+\begin{figure}
+   \centering
+        \Qcircuit @C=.8em @R=.8em @!R {
+        \lstick{i_{0}}&\gate{X}&\ctrl{7}&\ctrl{7}&\gate{X}&\qw\barrier{11}& &\cdots& &\barrier{11}& \gate{X}&\ctrl{7}&\ctrl{7}&\ctrl{7}&\gate{X}&\qw\barrier{11}& &\cdots& &\barrier{11}&\ctrl{7}&\ctrl{7}&\qw&\rstick{i_{0}}&\\
+        \cdots        &        &        &        &        &              & &      & &           &         &        &        &        &        &              & &      & &           &        &        &   &\cdots         \\
+        \lstick{i_{k-j}}&\cw&\cw&\cw&\cw&\cw& &\cdots&  & &\cw&\cw&\cw&\cw&\cw&\cw& &\cdots & & &\cw&\cw&\cw&\rstick{i_{k-j}}\\
+        \cdots        &        &        &        &        &              & &      & &           &         &        &        &        &        &              & &      & &           &        &        &   &\cdots         \\
+        \lstick{i_{k-1}}&\cw&\cw&\cw&\cw&\cw& &\cdots&  & &\cw&\cw&\cw&\cw&\cw&\cw& &\cdots & & &\cw&\cw&\cw&\rstick{i_{k-1}}\\
+        \lstick{i_{k}}&\cw&\cw&\cw&\cw&\cw& &\cdots&  & &\cw&\cw&\cw&\cw&\cw&\cw& &\cdots & & &\cw&\cw&\cw&\rstick{i_{k}}\\
+        \cdots        &        &        &        &        &              & &      & &           &         &        &        &        &        &              & &      & &           &        &        &   &\cdots         \\
+        \lstick{i_{N}}&\gate{X}&\ctrl{1}&\ctrl{3}&\gate{X}&\qw           & &\cdots& &           & \qw     &\ctrl{1}&\ctrl{3}&\ctrl{4}&\qw     &\qw           & &\cdots& &           &\ctrl{1}&\ctrl{3}&\qw&\rstick{i_{N}}&\\
+        \lstick{f_{0}}&\qw     &\targ   &\qw     &\qw     &\qw           & &\cdots& &           & \qw     &\targ   &\qw     &\qw     &\qw     &\qw           & &\cdots& &           &\targ   &\qw     &\qw&\rstick{f_{0}}&\\
+        \cdots        &        &        &        &        &              & &      & &           &         &        &        &        &        &              & &      & &           &        &        &   &\cdots        &\\
+        \lstick{f_{M}}&\qw     &\qw     &\targ   &\qw     &\qw           & &\cdots& &           & \qw     &\qw     &\targ   &\qw     &\qw     &\qw           & &\cdots& &           &\qw     &\targ   &\qw&\rstick{f_{M}}&\\
+        \lstick{v}    &\qw     &\qw     &\qw     &\qw     &\qw           & &\cdots& &           & \qw     &\qw     &\qw     &\targ   &\qw     &\qw           & &\cdots& &           &\qw     &\qw     &\qw&\rstick{v}    &\\
+        }
+ 
+  \label{fig:ufit_new}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+   \centering
+
+        \Qcircuit @C=1.5em @R=.8em @!R  {
+        \lstick{}&\lstick{i_{0}}& \multigate{13}{U_{fit}} & \qw    & \rstick{i_{0}} & \\
+        & \cdots        & \nghost{U_{fit}}       & \cdots  \\
+        \lstick{}&\lstick{i_{k-j}}& \ghost{U_{fit}}        & \qw    & \rstick{i_{k-j}} &\\
+        & \cdots        & \nghost{U_{fit}}       & \cdots  \\
+        \lstick{}&\lstick{i_{k-1}}& \ghost{U_{fit}}        & \qw    & \rstick{i_{k-1}} &\\
+        \lstick{}&\lstick{i_{k}}& \ghost{U_{fit}}        & \qw    & \rstick{i_{k}} &\\
+        & \cdots        & \nghost{U_{fit}}       & \cdots  \\
+        \lstick{}&\lstick{i_{N}}& \ghost{U_{fit}}        & \qw    & \rstick{i_{N}} &\\
+        \inputgroupv{1}{8}{1.5em}{.8em}{} \\
+        \lstick{}&\lstick{f_{0}}& \ghost{U_{fit}}        & \qw    & \rstick{f_{0}} &\\ 
+        &\cdots        & \nghost{U_{fit}}       & \cdots  \\
+        \lstick{}&\lstick{f_{M}}& \ghost{U_{fit}}        & \qw    & \rstick{f_{M}} & \\
+        \inputgroupv{10}{12}{1.5em}{.9em}{}\\
+        \lstick{}&\lstick{v}    & \ghost{U_{fit}}        & \qw    & \rstick{v} &\\
+        }
+  
+  \label{fig:assessment_subcircuit}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+    \centering
+
+ \Qcircuit @C=0.2em @R=0.5em {
+    \lstick{carry_{in}} &\gate{X}     &\ctrl{2} & \ctrl{4} & \ctrl{6} &\ctrl{8} &\ctrl{10}    & \multigate{11}{QRCA}  & \ctrl{4} & \ctrl{6} & \ctrl{8} & \ctrl{10} & \gate{X} &\qw &  \rstick{carry_{in}}\\
+    \lstick{b_{0}}      &\qw          &\qw      & \qw      & \qw      & \qw      & \qw        & \ghost{QRCA}          & \qw & \qw & \qw &\qw &\qw& \qw &\rstick{b_{0}}\\
+    \lstick{a_{0}}      &\qw          &\targ    & \qw      & \qw      & \qw      & \qw        & \ghost{QRCA}          &\qw &\qw &\qw &\qw &\qw   & \qw & \rstick{a_{0}}\\
+    \lstick{b_{1}}      &\qw          & \qw     & \qw      & \qw      & \qw      &\qw         & \ghost{QRCA}          & \qw & \qw & \qw &\qw &\qw &\qw &\rstick{b_{1}}\\
+    \lstick{a_{1}}      &\qw          & \qw     &\targ     & \qw      & \qw      &\qw         & \ghost{QRCA}          & \targ & \qw & \qw &\qw &\qw &\qw &\rstick{a_{1}}\\
+    & \cdots            &             & \cdots  & &\cdots  &          &          & \cdots     &                      & \cdots      & &\cdots       \\
+    \lstick{a_{5}}      &\qw          &\qw      & \qw      &\targ     & \qw      &\qw         & \ghost{QRCA}          & \qw & \targ & \qw & \qw &\qw& \qw& \rstick{a_{5}}\\
+    \lstick{b_{6}}      &\qw          &\qw      & \qw      & \qw      &\qw       &\qw         & \ghost{QRCA}          & \qw &\qw & \qw & \qw & \qw &\qw &\rstick{b_{6}}\\
+    \lstick{a_{6}}      &\qw          &\qw      & \qw      & \qw      &\targ     &\qw         & \ghost{QRCA}          & \qw & \qw & \targ & \qw & \qw &\qw &\rstick{a_{6}}\\
+    \lstick{b_{7}}      &\qw          &\qw      & \qw      & \qw      &\qw       &\qw         & \ghost{QRCA}          & \qw & \qw &\qw &\qw &\qw &\qw &\rstick{b_{7}}\\
+    \lstick{a_{7}}      &\qw          &\qw      & \qw      & \qw      &\qw       &\targ       & \ghost{QRCA}          & \qw &\qw & \qw & \targ& \qw &\qw & \rstick{a_{7}}\\
+    \lstick{carry_{out}}&\qw          &\qw      & \qw      & \qw      &\qw       &\qw         & \ghost{QRCA}          & \qw & \qw &\qw & \qw &\qw &\qw &\rstick{carry_{out}}     
+}
+
+  
+  \label{fig:subtractor}
+\end{figure}
+
+\end{document}
+
+
+% ------------------------------------------------------------------------
+
+
