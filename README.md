@@ -1,4 +1,5 @@
 # Hybrid quantum search with genetic algorithm optimization
+[![DOI](https://zenodo.org/badge/500557191.svg)](https://zenodo.org/doi/10.5281/zenodo.12535318)
 
 ## Required tools
 
